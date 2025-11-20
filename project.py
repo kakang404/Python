@@ -1,3 +1,5 @@
+import pandas as pd
+
 users = {
     "admin": "123",
     "aldi": "321"
@@ -13,7 +15,9 @@ def tambah_mahasiswa():
         nim = input("Masukkan NIM: ")
         nama = input("Masukkan Nama: ")
         jurusan = input("Masukkan Jurusan: ")
-        mahasiswa.append({"Nama": nama, "Nim": nim, "Jurusan": jurusan})
+        alamat = input("Masukkan Alamat: ")
+        jk = input("Masukkan Jenis Kelamin: ")
+        mahasiswa.append({"Nama": nama, "Nim": nim, "Jurusan": jurusan, "Alamat": alamat, "Jenis Kelamin": jk})
     print(f"\n{jumlah} ✅ Data mahasiswa berhasil ditambahkan!")
 
     # validasi agar nim mahasiswa tidak sama/double 
@@ -27,24 +31,25 @@ def tampilkan_mahasiswa():
     if not mahasiswa:
         print("\n❌ Belum ada data mahasiswa.")
     else:
-        print("\n             Halaman Daftar Mahasiswa")
-        print("====================================================")
-        print(f"{'Nama':<20} {'Nim':<20} {'Jurusan':<20}")
-        print("====================================================")
-        for mhs in mahasiswa:
-            print(f"{mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20}")
+        print("\n                                               Halaman Daftar Mahasiswa")
+        print("===================================================================================================================")
+        print(f"{'No':<5} {'Nama':<20} {'Nim':<20} {'Jurusan':<20} {'Alamat':<20} {'Jenis Kelamin':<20}")
+        print("===================================================================================================================")
+        for i, mhs in enumerate(mahasiswa, start = 1):
+            print(f"{i:<5} {mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20} {mhs['Alamat']:<20} {mhs['Jenis Kelamin']:<20}")
+
 
 # Fungsi cari mahasiswa
 def cari_mahasiswa():
     nim = input("\nMasukkan Nim yang dicari: ")
-    print("\n====================================================")
-    print("              Halaman Cari Mahasiswa")
-    print("====================================================")
-    print(f"{'Nama':<20} {'Nim':<20} {'Jurusan':<20}")
-    print("====================================================")
-    for mhs in mahasiswa:
+    print("\n=====================================================================================================================")
+    print("                                                     Halaman Cari Mahasiswa")
+    print("=======================================================================================================================")
+    print(f"{'No':<5} {'Nama':<20} {'Nim':<20} {'Jurusan':<20} {'Alamat':<20} {'Jenis Kelamin':<20}")
+    print("=======================================================================================================================")
+    for i, mhs in enumerate(mahasiswa, start = 1):
         if mhs["Nim"] == nim:
-            print(f"{mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20}")
+            print(f"{i:<5} {mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20}")
             return
     print("\n❌ Data tidak ditemukan.")
 
