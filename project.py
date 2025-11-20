@@ -18,7 +18,7 @@ def tambah_mahasiswa():
         alamat = input("Masukkan Alamat: ")
         jk = input("Masukkan Jenis Kelamin: ")
         mahasiswa.append({"Nama": nama, "Nim": nim, "Jurusan": jurusan, "Alamat": alamat, "Jenis Kelamin": jk})
-    print(f"\n{jumlah} ✅ Data mahasiswa berhasil ditambahkan!")
+    print(f"\n ✅ {jumlah} Data mahasiswa berhasil ditambahkan!")
 
     # validasi agar nim mahasiswa tidak sama/double 
     for mhs in mahasiswa:
