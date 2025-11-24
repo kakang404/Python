@@ -1,71 +1,79 @@
 import pandas as pd
 
-# Data login user
 users = {
     "admin": "123",
     "aldi": "321"
 }
 
-# DataFrame kosong untuk menyimpan data mahasiswa
-mahasiswa = pd.DataFrame(columns=["NIM", "Nama", "Jurusan"])
+mahasiswa = []
 
 # Fungsi tambah mahasiswa
 def tambah_mahasiswa():
-    global mahasiswa
     jumlah = int(input("Berapa banyak mahasiswa yang ingin ditambahkan? "))
-    
+
     for i in range(jumlah):
         print(f"\nData Mahasiswa ke-{i+1}")
+
         nim = input("Masukkan NIM: ")
+
+        # validasi NIM
+        for mhs in mahasiswa:
+            if mhs["Nim"] == nim:
+                print("❌ NIM sudah terdaftar. Gunakan NIM lain.")
+                return
 
         nama = input("Masukkan Nama: ")
         jurusan = input("Masukkan Jurusan: ")
+        alamat = input("Masukkan Alamat: ")
+        jk = input("Masukkan Jenis Kelamin: ")
 
-        # Tambahkan data ke DataFrame
-        data_baru = pd.DataFrame({"NIM": [nim], "Nama": [nama], "Jurusan": [jurusan]})
-        mahasiswa = pd.concat([mahasiswa, data_baru], ignore_index=True)
+        mahasiswa.append({
+            "Nama": nama,
+            "Nim": nim,
+            "Jurusan": jurusan,
+            "Alamat": alamat,
+            "Jenis Kelamin": jk
+        })
 
-        # Validasi agar NIM tidak ganda
-        if nim in mahasiswa["NIM"].values:
-            print("❌ NIM sudah terdaftar. Gunakan NIM lain.")
-        break
-        
-    
     print(f"\n✅ {jumlah} data mahasiswa berhasil ditambahkan!")
 
-# Fungsi tampilkan semua mahasiswa
+# Fungsi menampilkan data mahasiswa
 def tampilkan_mahasiswa():
-    if mahasiswa.empty:
+    if not mahasiswa:
         print("\n❌ Belum ada data mahasiswa.")
     else:
-        print("\n============= DAFTAR MAHASISWA =============")
-        print(mahasiswa.to_string(index=False))
-        print("============================================")
+        print("\n====================== DAFTAR MAHASISWA ======================")
+        df = pd.DataFrame((mahasiswa))
+        print(df.to_string())
+        print("==============================================================")
 
-# Fungsi cari mahasiswa berdasarkan NIM
+# Fungsi cari mahasiswa
 def cari_mahasiswa():
     nim = input("\nMasukkan NIM yang dicari: ")
-    hasil = mahasiswa[mahasiswa["NIM"] == nim]
-    
-    if not hasil.empty:
-        print("\n============= HASIL PENCARIAN =============")
-        print(hasil.to_string(index=False))
-        print("===========================================")
+
+    hasil = [mhs for mhs in mahasiswa if mhs["Nim"] == nim]
+
+    if hasil:
+        print("\n====================== DATA DITEMUKAN ======================")
+        df = pd.DataFrame(hasil)
+        print(df.to_string())
+        print("==============================================================")
     else:
         print("\n❌ Data tidak ditemukan.")
 
 # Fungsi hapus mahasiswa
 def hapus_mahasiswa():
-    global mahasiswa
     nim = input("\nMasukkan NIM yang ingin dihapus: ")
-    
-    if nim in mahasiswa["NIM"].values:
-        mahasiswa = mahasiswa[mahasiswa["NIM"] != nim]
-        print("\n✅ Data berhasil dihapus.")
-    else:
-        print("\n❌ Data tidak ditemukan.")
 
-# Menu utama
+    for mhs in mahasiswa:
+        if mhs["Nim"] == nim:
+            mahasiswa.remove(mhs)
+            print("\n✅ Data berhasil dihapus.")
+            return
+
+    print("\n❌ Data tidak ditemukan.")
+
+# MENU UTAMA
 def menu():
     while True:
         print("\n==============================================")
@@ -75,8 +83,10 @@ def menu():
         print("2. Tampilkan Semua Mahasiswa")
         print("3. Cari Mahasiswa")
         print("4. Hapus Mahasiswa")
-        print("5. Keluar")
-        pilihan = input("Pilih menu (1-5): ")
+        print("5. Export ke Excel (Auto Save)")
+        print("6. Download Hasil Data ke Excel")
+        print("7. Keluar")
+        pilihan = input("Pilih menu (1-7): ")
 
         if pilihan == "1":
             tambah_mahasiswa()
@@ -87,12 +97,23 @@ def menu():
         elif pilihan == "4":
             hapus_mahasiswa()
         elif pilihan == "5":
-            print("👋 Terima kasih telah menggunakan program ini.")
+            df = pd.DataFrame(mahasiswa)
+            df.to_excel("data_mahasiswa.xlsx", index=False)
+            print("\n📁 File berhasil disimpan sebagai data_mahasiswa.xlsx")
+        elif pilihan == "6":
+            if not mahasiswa:
+                print("\n❌ Tidak ada data untuk di-download.")
+            else:
+                df = pd.DataFrame(mahasiswa)
+                df.to_excel("download_data_mahasiswa.xlsx", index=False)
+                print("\n📥 File BERHASIL di-download sebagai:")
+                print("➡ download_data_mahasiswa.xlsx")
+        elif pilihan == "7":
+            print("Terima kasih!")
             break
         else:
             print("\n❌ Pilihan tidak valid.\n")
 
-# Fungsi login
 def login():
     print("\n======================================")
     print("           HALAMAN LOGIN")
@@ -101,11 +122,10 @@ def login():
     password = input("Masukkan password: ")
 
     if username in users and users[username] == password:
-        print(f"✅ Login berhasil! Selamat datang, {username}.")
+        print(f"✅ Login berhasil! Selamat datang, {username}")
         menu()
     else:
         print("❌ Login gagal. Username atau password salah.")
         login()
 
-# Jalankan program
 login()
