@@ -1,5 +1,3 @@
-import pandas as pd
-
 users = {
     "admin": "123",
     "aldi": "321"
@@ -12,11 +10,12 @@ def tambah_mahasiswa():
     jumlah = int(input("Berapa banyak mahasiswa yang ingin ditambahkan? "))
     for i in range(jumlah):
         print(f"\nData Mahasiswa ke - {i+1}")
-        nim = input("Masukkan NIM: ")
-        nama = input("Masukkan Nama: ")
-        jurusan = input("Masukkan Jurusan: ")
-        alamat = input("Masukkan Alamat: ")
-        jk = input("Masukkan Jenis Kelamin: ")
+        nim     = input("Masukkan NIM            : ")
+        nama    = input("Masukkan Nama           : ")
+        jurusan = input("Masukkan Jurusan        : ")
+        alamat  = input("Masukkan Alamat         : ")
+        jk      = input("Masukkan Jenis Kelamin  : ")
+
         mahasiswa.append({"Nama": nama, "Nim": nim, "Jurusan": jurusan, "Alamat": alamat, "Jenis Kelamin": jk})
     print(f"\n ✅ {jumlah} Data mahasiswa berhasil ditambahkan!")
 
@@ -49,7 +48,7 @@ def cari_mahasiswa():
     print("=======================================================================================================================")
     for i, mhs in enumerate(mahasiswa, start = 1):
         if mhs["Nim"] == nim:
-            print(f"{i:<5} {mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20}")
+            print(f"{i:<5} {mhs['Nama']:<20} {mhs['Nim']:<20} {mhs['Jurusan']:<20} {mhs['Alamat']:<20} {mhs['Jenis Kelamin']:<20}")
             return
     print("\n❌ Data tidak ditemukan.")
 

@@ -7,29 +7,40 @@ users = {
 
 mahasiswa = []
 
+# Fungsi untuk memastikan input tidak boleh kosong
+def input_wajib(pesan):
+    data = input(pesan).strip()
+    while data == "":
+        print("❌ Input tidak boleh kosong!")
+        data = input(pesan).strip()
+    return data
+
 # Fungsi tambah mahasiswa
 def tambah_mahasiswa():
     jumlah = int(input("Berapa banyak mahasiswa yang ingin ditambahkan? "))
 
     for i in range(jumlah):
-        print(f"\nData Mahasiswa ke-{i+1}")
+        print(f"\n--- Data Mahasiswa ke-{i+1} ---")
 
-        nim = input("Masukkan NIM: ")
+        # Input NIM (wajib diisi)
+        nim = input_wajib("Masukkan NIM: ")
 
-        # validasi NIM
+        # Cek apakah NIM sudah ada
         for mhs in mahasiswa:
-            if mhs["Nim"] == nim:
+            if mhs["NIM"] == nim:
                 print("❌ NIM sudah terdaftar. Gunakan NIM lain.")
                 return
 
-        nama = input("Masukkan Nama: ")
-        jurusan = input("Masukkan Jurusan: ")
-        alamat = input("Masukkan Alamat: ")
-        jk = input("Masukkan Jenis Kelamin: ")
+        # Input data lainnya (wajib diisi)
+        nama    = input_wajib("Masukkan Nama            : ")
+        jurusan = input_wajib("Masukkan Jurusan         : ")
+        alamat  = input_wajib("Masukkan Alamat          : ")
+        jk      = input_wajib("Masukkan Jenis Kelamin   : ")
 
+        # Simpan data ke list
         mahasiswa.append({
+            "NIM": nim,
             "Nama": nama,
-            "Nim": nim,
             "Jurusan": jurusan,
             "Alamat": alamat,
             "Jenis Kelamin": jk
@@ -44,7 +55,7 @@ def tampilkan_mahasiswa():
     else:
         print("\n====================== DAFTAR MAHASISWA ======================")
         df = pd.DataFrame((mahasiswa))
-        print(df.to_string())
+        print(df.to_string(index=False))
         print("==============================================================")
 
 # Fungsi cari mahasiswa
@@ -56,7 +67,7 @@ def cari_mahasiswa():
     if hasil:
         print("\n====================== DATA DITEMUKAN ======================")
         df = pd.DataFrame(hasil)
-        print(df.to_string())
+        print(df.to_string(index=False))
         print("==============================================================")
     else:
         print("\n❌ Data tidak ditemukan.")
