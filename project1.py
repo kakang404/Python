@@ -2,7 +2,7 @@ import pandas as pd
 
 mahasiswa = []
 
-# Fungsi untuk memastikan input tidak boleh kosong
+# --- Fungsi untuk memastikan input tidak boleh kosong ---
 def input_wajib(pesan):
     data = input(pesan).strip()
     while data == "":
@@ -10,6 +10,7 @@ def input_wajib(pesan):
         data = input(pesan).strip()
     return data
 
+# --- Fungsi untuk memastikan input harus angka ---
 def input_angka(pesan):
     while True:
         nilai = input(pesan)
@@ -17,7 +18,7 @@ def input_angka(pesan):
             return nilai
         print("❗ Input harus berupa angka dan tidak boleh kosong!")
 
-# Fungsi tambah mahasiswa
+# --- Fungsi tambah mahasiswa ---
 def tambah_mahasiswa():
     jumlah = int(input("Berapa banyak mahasiswa yang ingin ditambahkan? "))
 
@@ -50,7 +51,7 @@ def tambah_mahasiswa():
 
     print(f"✅ {jumlah} data mahasiswa berhasil ditambahkan!")
 
-# Fungsi menampilkan data mahasiswa
+# --- Fungsi menampilkan data mahasiswa ---
 def tampilkan_mahasiswa():
     if not mahasiswa:
         print("❌ Belum ada data mahasiswa.")
@@ -62,7 +63,7 @@ def tampilkan_mahasiswa():
         print(df.to_string())
         print("=" * 50)
 
-# Fungsi cari mahasiswa
+# --- Fungsi cari mahasiswa ---
 def cari_mahasiswa():
     nim = input("\nMasukkan NIM yang dicari: ")
 
@@ -78,7 +79,7 @@ def cari_mahasiswa():
     else:
         print("❌ Data tidak ditemukan.")
 
-# Fungsi hapus mahasiswa
+# --- Fungsi hapus mahasiswa ---
 def hapus_mahasiswa():
     nim = input("\nMasukkan NIM yang ingin dihapus: ")
 
@@ -90,7 +91,7 @@ def hapus_mahasiswa():
 
     print("❌ Data tidak ditemukan.")
 
-# Funsi edit mahasiswa
+# --- Funsi edit mahasiswa ---
 def edit_mahasiswa():
     if len(mahasiswa) == 0:
         print("❌ Belum ada data mahasiswa!")
@@ -148,7 +149,7 @@ def edit_mahasiswa():
 
     print("❌ NIM tidak ditemukan!")
 
-# MENU UTAMA
+# --- MENU UTAMA ---
 def menu():
     while True:
         print("\n\n\n" + "=" * 50)
